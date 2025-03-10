@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skills Stats Section</title>
+  <style>
+    /* Container and basic styling */
+    #skills {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    #skills h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    .skill-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    /* Skill bar styling */
+    .skill-bar {
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 5px;
+      border-radius: 4px;
+    }
+    
+    .skill-bar:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .skill-name {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    
+    .bar {
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 20px;
+    }
+    
+    .progress {
+      height: 100%;
+      background-color: #007BFF; /* Primary color */
+      width: 0;
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+    
+    /* Details panel styling */
+    .skill-details {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      min-height: 50px;
+      font-size: 14px;
+      color: #444;
+      background-color: #fff;
+    }
+    
+    .skill-details.highlight {
+      animation: highlightFade 1s ease;
+    }
+    
+    @keyframes highlightFade {
+      0% { background-color: #ffffcc; }
+      100% { background-color: #fff; }
+    }
+  </style>
+</head>
+<body>
+
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skill-container">
+      <div class="skill-bar" data-skill="python" data-level="90">
+        <div class="skill-name">Python</div>
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+      <div class="skill-bar" data-skill="javascript" data-level="80">
+        <div class="skill-name">JavaScript</div>
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+      <div class="skill-bar" data-skill="java" data-level="70">
+        <div class="skill-name">Java</div>
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+      <div class="skill-bar" data-skill="cpp" data-level="65">
+        <div class="skill-name">C++</div>
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+      <div class="skill-bar" data-skill="ruby" data-level="50">
+        <div class="skill-name">Ruby</div>
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+    </div>
+    <div id="skill-details" class="skill-details">
+      <!-- Detailed description appears here when a bar is clicked -->
+      Click a bar to see details.
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Mapping of skills to their descriptions
+      const skillDetails = {
+        python: "Python is versatile—ideal for data science, AI, and web development.",
+        javascript: "JavaScript is essential for interactive web applications.",
+        java: "Java is robust and widely used in enterprise-level applications.",
+        cpp: "C++ offers high performance and is excellent for system-level programming.",
+        ruby: "Ruby is known for its elegant syntax and is popular in web development (especially with Rails)."
+      };
+
+      // Animate the progress bars on load
+      document.querySelectorAll('.skill-bar').forEach(bar => {
+        const progressElement = bar.querySelector('.progress');
+        const level = bar.getAttribute('data-level');
+        // Use a short delay to ensure CSS transitions apply
+        setTimeout(() => {
+          progressElement.style.width = level + '%';
+        }, 100);
+        
+        // Add click event to update the details panel
+        bar.addEventListener('click', () => {
+          const skillKey = bar.getAttribute('data-skill');
+          const description = skillDetails[skillKey] || "No details available.";
+          
+          // Update the details panel with the selected skill's description
+          const detailsContainer = document.getElementById('skill-details');
+          detailsContainer.innerHTML = `<strong>${bar.querySelector('.skill-name').innerText}</strong>: ${description}`;
+          
+          // Trigger the highlight animation
+          detailsContainer.classList.remove('highlight');
+          void detailsContainer.offsetWidth; // Reflow to restart the animation
+          detailsContainer.classList.add('highlight');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
